@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Pedido — BRLanches</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-brlanches navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand-logo" href="index.html">🇧🇷 BRLanches</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav gap-1 mt-2 mt-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="cardapio.html">Cardápio</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="carrinho.html">
+            <i class="bi bi-cart3"></i> Carrinho
+            <span class="badge-carrinho" id="badge-carrinho" style="display:none">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container py-5">
+    <h1 class="section-title mb-4">Finalizar Pedido</h1>
+
+    <div id="checkout-layout">
+      <div class="row g-4 flex-column-reverse flex-md-row">
+
+        <div class="col-12 col-md-7">
+          <div class="bg-white rounded-3 shadow-sm p-4">
+            <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--verde); margin-bottom:1.2rem; letter-spacing:1px;">
+              Seus Dados
+            </h2>
+            <div class="form-checkout d-flex flex-column gap-3">
+              <div>
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" placeholder="Seu nome completo">
+              </div>
+              <div>
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" placeholder="(11) 99999-9999">
+              </div>
+              <div>
+                <label for="endereco">Endereço de entrega</label>
+                <textarea id="endereco" rows="3" placeholder="Rua, número, bairro, complemento"></textarea>
+              </div>
+              <div id="erro-msg" class="text-danger fw-bold" style="display:none; font-size:0.9rem;"></div>
+              <button class="btn-primary-br w-100" style="padding:0.8rem; font-size:1.05rem;" onclick="confirmarPedido()">
+                <i class="bi bi-check-circle me-2"></i>Confirmar Pedido
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-5">
+          <div class="resumo-card">
+            <h2 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--verde); margin-bottom:1rem; letter-spacing:1px;">
+              Resumo do Pedido
+            </h2>
+            <div id="resumo-itens"></div>
+            <div class="resumo-total" id="resumo-total"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="sucesso-box" class="sucesso-box" style="display:none">
+      <span class="icon">✅</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--verde); letter-spacing:2px;" id="sucesso-titulo"></h2>
+      <p class="text-muted mt-2 mb-4" style="font-size:1.05rem;">Em breve chega na sua porta. 🇧🇷</p>
+      <a href="index.html" class="btn-primary-br" style="font-size:1.05rem; padding:0.75rem 2rem;">
+        <i class="bi bi-house me-1"></i> Voltar ao Início
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-faixa">
+    <div class="footer-faixa-verde"></div>
+    <div class="footer-faixa-amarelo"></div>
+    <div class="footer-faixa-azul"></div>
+  </div>
+  <div class="footer-corpo">
+    &copy; 2025 BRLanches — Feito com paixão pela seleção 🇧🇷
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/carrinho.js"></script>
+<script>
+  function formatarPreco(valor) {
+    return 'R$ ' + parseFloat(valor).toFixed(2).replace('.', ',')
+  }
+
+  function renderizarResumo() {
+    const carrinho = obterCarrinho()
+    const container = document.getElementById('resumo-itens')
+    container.innerHTML = ''
+    let total = 0
+
+    if (carrinho.length === 0) {
+      container.innerHTML = '<p class="text-muted">Carrinho vazio. <a href="cardapio.html">Ver cardápio</a></p>'
+      document.getElementById('resumo-total').innerHTML = ''
+      return
+    }
+
+    carrinho.forEach(item => {
+      const subtotal = item.preco * item.quantidade
+      total += subtotal
+      const div = document.createElement('div')
+      div.className = 'resumo-item'
+      div.innerHTML = `
+        <span>${item.nome} <span class="text-muted">x${item.quantidade}</span></span>
+        <span>${formatarPreco(subtotal)}</span>
+      `
+      container.appendChild(div)
+    })
+
+    document.getElementById('resumo-total').innerHTML = `
+      <span>Total</span>
+      <span>${formatarPreco(total)}</span>
+    `
+
+    return total
+  }
+
+  async function confirmarPedido() {
+    const nome = document.getElementById('nome').value.trim()
+    const telefone = document.getElementById('telefone').value.trim()
+    const endereco = document.getElementById('endereco').value.trim()
+    const erroMsg = document.getElementById('erro-msg')
+
+    if (!nome || !telefone || !endereco) {
+      erroMsg.textContent = 'Preencha todos os campos obrigatórios.'
+      erroMsg.style.display = 'block'
+      return
+    }
+
+    erroMsg.style.display = 'none'
+
+    const carrinho = obterCarrinho()
+    if (carrinho.length === 0) {
+      erroMsg.textContent = 'Seu carrinho está vazio.'
+      erroMsg.style.display = 'block'
+      return
+    }
+
+    const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0)
+
+    const btn = document.querySelector('[onclick="confirmarPedido()"]')
+    btn.disabled = true
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processando...'
+
+    const { data: pedido, error: erroPedido } = await supabaseClient
+      .from('pedidos')
+      .insert([{ nome_cliente: nome, telefone, endereco, total }])
+      .select()
+      .single()
+
+    if (erroPedido || !pedido) {
+      erroMsg.textContent = 'Erro ao registrar pedido. Tente novamente.'
+      erroMsg.style.display = 'block'
+      btn.disabled = false
+      btn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Confirmar Pedido'
+      return
+    }
+
+    const itens = carrinho.map(item => ({
+      pedido_id: pedido.id,
+      produto_id: item.id,
+      quantidade: item.quantidade,
+      preco_unitario: item.preco
+    }))
+
+    const { error: erroItens } = await supabaseClient.from('itens_pedido').insert(itens)
+
+    if (erroItens) {
+      erroMsg.textContent = 'Erro ao salvar itens. Tente novamente.'
+      erroMsg.style.display = 'block'
+      btn.disabled = false
+      btn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Confirmar Pedido'
+      return
+    }
+
+    limparCarrinho()
+    document.getElementById('checkout-layout').style.display = 'none'
+    document.getElementById('sucesso-titulo').textContent = `✅ Pedido #${pedido.id} confirmado!`
+    document.getElementById('sucesso-box').style.display = 'block'
+  }
+
+  renderizarResumo()
+</script>
+</body>
+</html>

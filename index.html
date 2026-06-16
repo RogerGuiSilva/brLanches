@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> BRLANCHES </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-brlanches navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand-logo" href="index.html">BRLanches</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav gap-1 mt-2 mt-lg-0">
+        <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="cardapio.html">Cardápio</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="carrinho.html">
+            <i class="bi bi-cart3"></i> Carrinho
+            <span class="badge-carrinho" id="badge-carrinho" style="display:none">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero-section">
+    <div class="container position-relative" style="z-index:1">
+      <div class="hero-badge"> BRLanches</div>
+      <h1 class="hero-headline">O SABOR DO MAIOR CAMPEÃO</h1>
+      <p class="hero-sub">Lanches que celebram nossa Nação. Peça agora e assista a copa bem alimentado.</p>
+      <a href="cardapio.html" class="btn-primary-br" style="font-size:1.1rem; padding: 0.75rem 2rem;">
+        Ver Cardápio <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+  </section>
+
+  <section class="destaques-section">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Destaques da Casa</h2>
+        <p class="section-subtitle">Os favoritos da torcida — peça o seu agora</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card-produto">
+            <div class="card-produto-body">
+              <span class="badge-categoria badge-lanches">Lanches</span>
+              <div class="card-produto-nome">X-10</div>
+              <p class="card-produto-desc">
+Pão brioche, 2 hambúrgueres bovinos, ovo, bacon crocante, presunto, queijo mussarela, cheddar, catupiry, salsicha, calabresa, frango desfiado, alface, tomate, cebola, milho, ervilha, cenoura ralada, azeitona, picles, batata palha, onion rings e molho especial da casa.
+</p>
+              <div class="card-produto-preco">R$ 32,90</div>
+              <a href="cardapio.html" class="btn-primary-br w-100 text-center">Ver Cardápio Completo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card-produto">
+            <div class="card-produto-body">
+              <span class="badge-categoria badge-lanches">Lanches</span>
+              <div class="card-produto-nome">X-Canarinho</div>
+              <p class="card-produto-desc">
+Filé de frango empanado crocante, queijo derretido, alface fresca, tomate, milho, batata palha e molho especial da casa.
+</p>
+              <div class="card-produto-preco">R$ 24,90</div>
+              <a href="cardapio.html" class="btn-primary-br w-100 text-center">Ver Cardápio Completo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="card-produto">
+            <div class="card-produto-body">
+              <span class="badge-categoria badge-sucos">Sucos</span>
+              <div class="card-produto-nome">'Suco Braza</div>
+              <p class="card-produto-desc">Laranja com abacaxi gelado</p>
+              <div class="card-produto-preco">R$ 9,90</div>
+              <a href="cardapio.html" class="btn-primary-br w-100 text-center">Ver Cardápio Completo</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="como-funciona">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Como funciona</h2>
+        <p class="section-subtitle">Simples e rápido, do jeito brasileiro</p>
+      </div>
+      <div class="row g-3 justify-content-center">
+        <div class="col-12 col-sm-4">
+          <div class="passo-item">
+            <span class="passo-emoji">🍔</span>
+            <div class="passo-titulo">Escolha</div>
+            <p class="passo-desc">Navegue pelo cardápio e encontre seu favorito da seleção</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="passo-item">
+            <span class="passo-emoji">🛒</span>
+            <div class="passo-titulo">Adicione ao Carrinho</div>
+            <p class="passo-desc">Monte seu pedido com quantos itens quiser</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4">
+          <div class="passo-item">
+            <span class="passo-emoji">✅</span>
+            <div class="passo-titulo">Finalize o Pedido</div>
+            <p class="passo-desc">Preencha seus dados e aguarde na arquibancada</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-faixa">
+    <div class="footer-faixa-verde"></div>
+    <div class="footer-faixa-amarelo"></div>
+    <div class="footer-faixa-azul"></div>
+  </div>
+  <div class="footer-corpo">
+    &copy; 2026 BRLanches — Feito para honrar nossa grande Seleção
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/carrinho.js"></script>
+</body>
+</html>
