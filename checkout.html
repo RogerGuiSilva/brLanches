@@ -50,7 +50,7 @@
               </div>
               <div>
                 <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone" placeholder="(11) 99999-9999">
+                <input type="tel" id="telefone" placeholder="(11) 99999-9999" inputmode="numeric" autocomplete="tel" maxlength="15" oninput="formatarTelefone(this)">
               </div>
               <div>
                 <label for="endereco">Endereço de entrega</label>
@@ -108,6 +108,41 @@
     return 'R$ ' + parseFloat(valor).toFixed(2).replace('.', ',')
   }
 
+  function obterDigitosTelefone(telefone) {
+    return telefone.replace(/\D/g, '')
+  }
+
+  function telefoneEhValido(telefone) {
+    const digitos = obterDigitosTelefone(telefone)
+    return /^\d{10,11}$/.test(digitos)
+  }
+
+  function formatarTelefone(input) {
+    const digitos = obterDigitosTelefone(input.value).slice(0, 11)
+
+    if (digitos.length <= 2) {
+      input.value = digitos
+      return
+    }
+
+    if (digitos.length <= 10) {
+      input.value = digitos.replace(/^(\d{2})(\d{0,4})(\d{0,4}).*/, (_, ddd, inicio, fim) => {
+        let telefone = `(${ddd})`
+        if (inicio) telefone += ` ${inicio}`
+        if (fim) telefone += `-${fim}`
+        return telefone
+      })
+      return
+    }
+
+    input.value = digitos.replace(/^(\d{2})(\d{0,5})(\d{0,4}).*/, (_, ddd, inicio, fim) => {
+      let telefone = `(${ddd})`
+      if (inicio) telefone += ` ${inicio}`
+      if (fim) telefone += `-${fim}`
+      return telefone
+    })
+  }
+
   function renderizarResumo() {
     const carrinho = obterCarrinho()
     const container = document.getElementById('resumo-itens')
@@ -148,6 +183,12 @@
 
     if (!nome || !telefone || !endereco) {
       erroMsg.textContent = 'Preencha todos os campos obrigatórios.'
+      erroMsg.style.display = 'block'
+      return
+    }
+
+    if (!telefoneEhValido(telefone)) {
+      erroMsg.textContent = 'Informe um telefone válido com DDD.'
       erroMsg.style.display = 'block'
       return
     }
